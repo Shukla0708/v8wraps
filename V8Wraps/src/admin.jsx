@@ -9,6 +9,7 @@ export default function AdminPage() {
     email: "",
     password: ""
   });
+  const backend = import.meta.env.VITE_APP_API_BASE_URL;
 
   useEffect(() => {
     // Check if user is already authenticated (in a real app, check JWT)
@@ -18,7 +19,7 @@ export default function AdminPage() {
       if (!token) return setLoading(false);
 
       try {
-        const res = await fetch('http://localhost:5000/api/auth/user', {
+        const res = await fetch(`${backend}api/auth/user`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -48,7 +49,7 @@ export default function AdminPage() {
     setError("");
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth', {
+      const response = await fetch(`${backend}api/auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

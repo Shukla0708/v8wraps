@@ -10,6 +10,7 @@ export default function AdminPanel() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [editingImage, setEditingImage] = useState(null);
+    const backend = import.meta.env.VITE_APP_API_BASE_URL;
 
     const apiFetch = async (url, options = {}) => {
         const token = localStorage.getItem("token");
@@ -46,7 +47,7 @@ export default function AdminPanel() {
     const loadImages = async () => {
         try {
             setLoading(true);
-            const response = await apiFetch('http://localhost:5000/api/images', {});
+            const response = await apiFetch(`${backend}api/images`, {});
             //   const data = await imageService.getImages();
             const data = await response.json();
             setImages(data);
@@ -104,7 +105,7 @@ export default function AdminPanel() {
                 display_order: formData.display_order || 0,
             };
 
-            const response = await apiFetch('http://localhost:5000/api/images', {
+            const response = await apiFetch(`${backend}api/images`, {
                 method: 'POST',
                 body: JSON.stringify(imageData)
             });
@@ -152,7 +153,7 @@ export default function AdminPanel() {
 
         setLoading(true);
         try {
-            const response = await apiFetch(`http://localhost:5000/api/images/${editingImage.id}`, {
+            const response = await apiFetch(`${backend}api/images/${editingImage.id}`, {
                 method: 'PUT',
                 body: JSON.stringify(formData)
             });
@@ -174,7 +175,7 @@ export default function AdminPanel() {
 
         setLoading(true);
         try {
-            await apiFetch(`http://localhost:5000/api/images/${id}`, {
+            await apiFetch(`${backend}api/images/${id}`, {
                 method: 'DELETE',
             });
 
@@ -182,7 +183,7 @@ export default function AdminPanel() {
             setImages(images.filter(img => img.id !== id));
             setSuccess("Image deleted successfully!");
             try {
-                const response = await apiFetch('http://localhost:5000/api/images/delete-cloudinary-image', {
+                const response = await apiFetch(`${backend}api/images/delete-cloudinary-image`, {
                     method: 'POST',
                     body: JSON.stringify({ publicId }),
                 });

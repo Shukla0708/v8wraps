@@ -8,7 +8,7 @@ export default function BookingForm() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [showPayment, setShowPayment] = useState(false);
     const [bookingId, setBookingId] = useState(null);
-
+    const backend = import.meta.env.VITE_APP_API_BASE_URL;
     // Service pricing (you can customize these)
     const servicePrices = {
         "Vehicle Wrap": 250,
@@ -41,7 +41,7 @@ export default function BookingForm() {
     useEffect(() => {
         const fetchBookedDates = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/booked-dates");
+                const res = await fetch(`http://localhost:5000/api/booked-dates`);
                 const data = await res.json();
                 setBookedDates(data);
             } catch (error) {
@@ -166,7 +166,7 @@ export default function BookingForm() {
             // Add status as pending payment
             formData.append("status", "pending_payment");
 
-            const response = await fetch('http://localhost:5000/api/create-booking', {
+            const response = await fetch(`${backend}api/create-booking`, {
                 method: "POST",
                 body: formData,
             });
@@ -234,7 +234,7 @@ export default function BookingForm() {
             );
             if (photo) quoteData.append("photo", photo);
             
-            const response = await fetch('http://localhost:5000/api/quotation', {
+            const response = await fetch(`${backend}api/quotation`, {
                 method: "POST",
                 body: quoteData,
             });
@@ -254,7 +254,7 @@ export default function BookingForm() {
     const handlePaymentSuccess = async (paymentData) => {
         try {
             // Update booking with payment information
-            const response = await fetch('http://localhost:5000/api/confirm-payment', {
+            const response = await fetch(`${backend}api/confirm-payment`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

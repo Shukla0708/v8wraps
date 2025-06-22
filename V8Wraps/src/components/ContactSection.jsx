@@ -3,12 +3,12 @@ import { Phone, Mail, MapPin, Instagram, MessageSquare } from "lucide-react";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-
+  const backend = import.meta.env.VITE_APP_API_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await fetch('http://localhost:5000/api/contact', {
+      await fetch(`${backend}api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
