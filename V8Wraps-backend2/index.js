@@ -28,7 +28,8 @@ app.use('/api/images', imageRoutes);
 // });
 
 // Set up Multer storage
-const storage = multer.memoryStorage();
+// const storage = multer.memoryStorage();
+const { storage } = require('./lib/cloudinary'); 
 const upload = multer({ storage });
 
 // Contact form endpoint
