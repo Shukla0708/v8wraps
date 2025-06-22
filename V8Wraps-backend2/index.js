@@ -17,18 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/images', imageRoutes);
 
-// app.use((err, req, res, next) => {
-//   console.error(err.stack);
-//   res.status(500).json({ message: 'Something went wrong!' });
-// });
-
-// 404 handler
-// app.use('*', (req, res) => {
-//   res.status(404).json({ message: 'Route not found' });
-// });
-
-// Set up Multer storage
-// const storage = multer.memoryStorage();
+// Use Cloudinary storage from your lib/cloudinary.js
 const { storage } = require('./lib/cloudinary'); 
 const upload = multer({ storage });
 
@@ -52,9 +41,20 @@ app.post("/api/create-booking", upload.single("photo"), async (req, res) => {
 
   try {
     console.log("📝 Creating new booking:", { name, service, date, status });
+    console.log("📎 File uploaded:", file ? file.originalname : "No file");
 
     // Generate a unique booking ID
     const bookingId = `BOOKING_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Prepare file data for email (if file exists)
+    let fileForEmail = null;
+    if (file) {
+      fileForEmail = {
+        originalname: file.originalname,
+        path: file.path, // Cloudinary URL
+        size: file.size
+      };
+    }
 
     // Add to Google Sheets with booking ID and status
     const sheetData = {
@@ -67,17 +67,19 @@ app.post("/api/create-booking", upload.single("photo"), async (req, res) => {
       message,
       status: status || 'pending_payment',
       createdAt: new Date().toISOString(),
-      paymentStatus: 'pending'
+      paymentStatus: 'pending',
+      fileUrl: file ? file.path : null // Store Cloudinary URL if file exists
     };
 
-    await addToGoogleSheet(sheetData, file);
+    await addToGoogleSheet(sheetData, fileForEmail);
 
     console.log("✅ Booking created successfully with ID:", bookingId);
 
     res.status(200).json({ 
       message: "Booking created successfully!",
       bookingId: bookingId,
-      status: 'pending_payment'
+      status: 'pending_payment',
+      fileUrl: file ? file.path : null
     });
   } catch (err) {
     console.error("❌ Booking creation error:", err);
@@ -130,21 +132,37 @@ app.post("/api/confirm-payment", async (req, res) => {
   }
 });
 
-//Quotation
+// Quotation endpoint
 app.post("/api/quotation", upload.single("photo"), async (req, res) => {
   const data = req.body;
   const file = req.file;
 
   try {
-    console.log("Uploaded file:", file?.originalname);
+    console.log("📎 Uploaded file:", file?.originalname);
+    console.log("🌩️ Cloudinary URL:", file?.path);
 
-    // Add to Google Sheets (old format)
-    await sendBookingEmail(data, file);
+    // Prepare file data for email
+    let fileForEmail = null;
+    if (file) {
+      // For Cloudinary, we need to fetch the file buffer for email attachment
+      // Or we can include the Cloudinary URL in the email instead
+      fileForEmail = {
+        originalname: file.originalname,
+        cloudinaryUrl: file.path,
+        size: file.size
+      };
+    }
 
-    res.status(200).json({ message: "Booking received!" });
+    // Send booking email with Cloudinary URL
+    await sendBookingEmail(data, fileForEmail);
+
+    res.status(200).json({ 
+      message: "Quotation request received!",
+      fileUrl: file ? file.path : null
+    });
   } catch (err) {
-    console.error("Booking error:", err);
-    res.status(500).json({ error: "Booking failed." });
+    console.error("❌ Quotation error:", err);
+    res.status(500).json({ error: "Quotation request failed." });
   }
 });
 
@@ -154,14 +172,28 @@ app.post("/api/book", upload.single("photo"), async (req, res) => {
   const file = req.file;
 
   try {
-    console.log("Uploaded file:", file?.originalname);
+    console.log("📎 Uploaded file:", file?.originalname);
+    console.log("🌩️ Cloudinary URL:", file?.path);
+
+    // Prepare file data
+    let fileForSheets = null;
+    if (file) {
+      fileForSheets = {
+        originalname: file.originalname,
+        path: file.path, // Cloudinary URL
+        size: file.size
+      };
+    }
 
     // Add to Google Sheets (old format)
-    await addToGoogleSheet({ name, phone, email, service, date, message }, file);
+    await addToGoogleSheet({ name, phone, email, service, date, message }, fileForSheets);
 
-    res.status(200).json({ message: "Booking received!" });
+    res.status(200).json({ 
+      message: "Booking received!",
+      fileUrl: file ? file.path : null
+    });
   } catch (err) {
-    console.error("Booking error:", err);
+    console.error("❌ Booking error:", err);
     res.status(500).json({ error: "Booking failed." });
   }
 });
@@ -185,7 +217,7 @@ app.get("/api/booked-dates", async (req, res) => {
     // Get all data from the sheet
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Sheet1!A2:L", // Extended range to include new columns
+      range: "Sheet1!A2:M", // Extended range to include new columns
     });
 
     if (!response.data.values || response.data.values.length === 0) {
@@ -256,7 +288,6 @@ app.get("/api/booked-dates", async (req, res) => {
     console.error("❌ Error fetching booked dates:", err);
     res.status(500).json({ error: "Failed to fetch booked dates" });
   }
-
 });
 
 // Get booking details endpoint (optional - for admin purposes)
@@ -279,7 +310,7 @@ app.get("/api/booking/:bookingId", async (req, res) => {
 
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Sheet1!A2:L",
+      range: "Sheet1!A2:M",
     });
 
     if (!response.data.values || response.data.values.length === 0) {
@@ -306,7 +337,8 @@ app.get("/api/booking/:bookingId", async (req, res) => {
       status: booking[8],
       paymentStatus: booking[9],
       paymentId: booking[10],
-      paymentAmount: booking[11]
+      paymentAmount: booking[11],
+      fileUrl: booking[12] // If you store Cloudinary URLs
     };
 
     res.json(bookingDetails);
@@ -316,6 +348,24 @@ app.get("/api/booking/:bookingId", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
+// Health check endpoint
+app.get("/api/health", (req, res) => {
+  res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ message: 'Route not found' });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🌩️ Cloudinary configured for file uploads`);
 });
