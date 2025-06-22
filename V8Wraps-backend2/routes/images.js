@@ -1,8 +1,6 @@
 const express = require('express');
 const { supabase } = require('../lib/supabase');
 const {authenticateToken} = require('../lib/middleware')
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
