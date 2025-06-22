@@ -1,0 +1,21 @@
+# Node dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Uploaded files (handled via multer and sent to Cloudinary)
+uploads/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# IDE settings (optional, but good practice)
+.vscode/
+.idea/
