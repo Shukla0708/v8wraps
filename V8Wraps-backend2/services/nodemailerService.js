@@ -206,7 +206,6 @@
 // };
 
 const nodemailer = require("nodemailer");
-const fetch = require('node-fetch'); // You might need to install this: npm install node-fetch
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
