@@ -88,3 +88,11 @@ html {
 .dialog-container {
   pointer-events: auto;
 }
+
+*{
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+  overflow-x: hidden;
+}
