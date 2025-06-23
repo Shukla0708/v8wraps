@@ -217,6 +217,7 @@ app.get("/api/booked-dates", async (req, res) => {
 
     const authClient = await auth.getClient();
     const sheets = google.sheets({ version: "v4", auth: authClient });
+    console.log("✅ Authentication successful");
     console.log(authClient);
     console.log(sheets);
     // Get all data from the sheet
