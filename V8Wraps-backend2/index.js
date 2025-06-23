@@ -18,7 +18,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/images', imageRoutes);
 
 // Use Cloudinary storage from your lib/cloudinary.js
-const { storage } = require('./lib/cloudinary'); 
+const { storage } = require('./lib/cloudinary');
 const upload = multer({ storage });
 
 // Contact form endpoint
@@ -75,7 +75,7 @@ app.post("/api/create-booking", upload.single("photo"), async (req, res) => {
 
     console.log("✅ Booking created successfully with ID:", bookingId);
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Booking created successfully!",
       bookingId: bookingId,
       status: 'pending_payment',
@@ -121,7 +121,7 @@ app.post("/api/confirm-payment", async (req, res) => {
 
     console.log("✅ Payment confirmed successfully");
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Payment confirmed successfully!",
       bookingId: bookingId,
       status: 'confirmed'
@@ -156,7 +156,7 @@ app.post("/api/quotation", upload.single("photo"), async (req, res) => {
     // Send booking email with Cloudinary URL
     await sendBookingEmail(data, fileForEmail);
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Quotation request received!",
       fileUrl: file ? file.path : null
     });
@@ -188,7 +188,7 @@ app.post("/api/book", upload.single("photo"), async (req, res) => {
     // Add to Google Sheets (old format)
     await addToGoogleSheet({ name, phone, email, service, date, message }, fileForSheets);
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Booking received!",
       fileUrl: file ? file.path : null
     });
@@ -202,15 +202,15 @@ app.post("/api/book", upload.single("photo"), async (req, res) => {
 app.get("/api/booked-dates", async (req, res) => {
   try {
     console.log("🔍 Fetching booked dates from Google Sheets...");
-    
+
     let privateKey = process.env.GOOGLE_PRIVATE_KEY;
-        privateKey = privateKey.replace(/^"|"$/g, '');
-        privateKey = privateKey.replace(/\\n/g, '\n');
+    privateKey = privateKey.replace(/^"|"$/g, '');
+    privateKey = privateKey.replace(/\\n/g, '\n');
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key:  privateKey, //process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        private_key: privateKey, //process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       },
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
@@ -220,16 +220,38 @@ app.get("/api/booked-dates", async (req, res) => {
     console.log(authClient);
     console.log(sheets);
     // Get all data from the sheet
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Sheet1!A2:M", // Extended range to include new columns
-    });
+    // const response = await sheets.spreadsheets.values.get({
+    //   spreadsheetId: process.env.GOOGLE_SHEET_ID,
+    //   range: "Sheet1!A2:M", // Extended range to include new columns
+    // });
 
-    if (!response.data.values || response.data.values.length === 0) {
-      console.log("📋 No data found in sheet");
-      return res.json([]);
+    // if (!response.data.values || response.data.values.length === 0) {
+    //   console.log("📋 No data found in sheet");
+    //   return res.json([]);
+    // }
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: "Sheet1!A2:M",
+      });
+
+      if (!response.data.values || response.data.values.length === 0) {
+        console.log("📋 No data found in sheet");
+        return res.json([]);
+      }
+
+      console.log("✅ Data fetched:", response.data.values);
+      return res.json(response.data.values);
+    } catch (error) {
+      console.error("❌ Error reading from sheet:");
+      if (error.response?.data) {
+        console.error(JSON.stringify(error.response.data, null, 2));
+      } else {
+        console.error(error.message);
+        console.error(error);
+      }
+      return res.status(500).json({ error: "Failed to fetch data from sheet" });
     }
-
     // Extract dates from confirmed bookings using NEW format only
     // New format: Date in column G (index 6), Status in columns I and J (indices 8 and 9)
     const confirmedDates = response.data.values
@@ -243,13 +265,13 @@ app.get("/api/booked-dates", async (req, res) => {
         // Check status in columns I and J (indices 8 and 9)
         const statusI = row[8]?.toLowerCase(); // Column I
         const statusJ = row[9]?.toLowerCase(); // Column J
-        
+
         // Consider booking confirmed if either status column shows confirmed/paid
-        const isConfirmed = statusI === 'confirmed' || statusI === 'paid' || 
-                           statusJ === 'confirmed' || statusJ === 'paid';
-        
+        const isConfirmed = statusI === 'confirmed' || statusI === 'paid' ||
+          statusJ === 'confirmed' || statusJ === 'paid';
+
         console.log(`Row check - Date: ${date}, Status I: ${statusI}, Status J: ${statusJ}, Confirmed: ${isConfirmed}`);
-        
+
         return isConfirmed;
       })
       .map(row => row[6]) // Get date from column G (index 6)
@@ -301,7 +323,7 @@ app.get("/api/booking/:bookingId", async (req, res) => {
 
   try {
     console.log("🔍 Fetching booking details for:", bookingId);
-    
+
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -358,7 +380,7 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-app.get("/", (req,res)=>{
+app.get("/", (req, res) => {
   console.log("hello world");
 });
 // 404 handler
