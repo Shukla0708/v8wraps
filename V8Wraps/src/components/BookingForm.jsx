@@ -41,7 +41,7 @@ export default function BookingForm() {
     useEffect(() => {
         const fetchBookedDates = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/booked-dates`);
+                const res = await fetch(`${backend}api/booked-dates`);
                 const data = await res.json();
                 setBookedDates(data);
             } catch (error) {
