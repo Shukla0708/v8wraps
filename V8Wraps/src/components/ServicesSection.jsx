@@ -233,7 +233,7 @@ export default function ServicesSection() {
         {/* Carousel Container */}
         <div className="relative">
           {/* Main Carousel */}
-          <div className="overflow-hidden rounded-2xl">
+          <div className="overflow-hidden rounded-2xl relative">
             <div 
               className="flex transition-transform duration-700 ease-out"
               style={{ 
@@ -298,14 +298,14 @@ export default function ServicesSection() {
             onClick={prevSlide}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 bg-white hover:bg-orange-500 text-orange-500 hover:text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-orange-200 z-10 group"
           >
-            <ChevronLeft size={24} className="group-hover:scale-110 transition-transform duration-300" />
+            <ChevronLeft size={10} className="group-hover:scale-110 transition-transform duration-300" />
           </button>
           
           <button
             onClick={nextSlide}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 bg-white hover:bg-orange-500 text-orange-500 hover:text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-orange-200 z-10 group"
           >
-            <ChevronRight size={24} className="group-hover:scale-110 transition-transform duration-300" />
+            <ChevronRight size={10} className="group-hover:scale-110 transition-transform duration-300" />
           </button>
         </div>
 

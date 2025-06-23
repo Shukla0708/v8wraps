@@ -121,7 +121,7 @@ export default function GallerySection() {
                     onClick={() => setSelectedPair({ title, beforeImg, afterImg })}
                   >
                     <h3 className="text-center font-bold text-lg text-orange-600 mb-4">{title}</h3>
-                    <div className="aspect-square overflow-hidden rounded-xl relative">
+                    <div className="aspect-square overflow-hidden rounded-xl relative max-w-full">
                       <ReactCompareImage
                         leftImage={beforeImg.cloudinary_url}
                         rightImage={afterImg.cloudinary_url}
