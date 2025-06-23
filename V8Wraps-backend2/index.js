@@ -221,38 +221,16 @@ app.get("/api/booked-dates", async (req, res) => {
     console.log(authClient);
     console.log(sheets);
     // Get all data from the sheet
-    // const response = await sheets.spreadsheets.values.get({
-    //   spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    //   range: "Sheet1!A2:M", // Extended range to include new columns
-    // });
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: "Sheet1!A2:M", // Extended range to include new columns
+    });
 
-    // if (!response.data.values || response.data.values.length === 0) {
-    //   console.log("📋 No data found in sheet");
-    //   return res.json([]);
-    // }
-    try {
-      const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: "Sheet1!A2:M",
-      });
-
-      if (!response.data.values || response.data.values.length === 0) {
-        console.log("📋 No data found in sheet");
-        return res.json([]);
-      }
-
-      console.log("✅ Data fetched:", response.data.values);
-      return res.json(response.data.values);
-    } catch (error) {
-      console.error("❌ Error reading from sheet:");
-      if (error.response?.data) {
-        console.error(JSON.stringify(error.response.data, null, 2));
-      } else {
-        console.error(error.message);
-        console.error(error);
-      }
-      return res.status(500).json({ error: "Failed to fetch data from sheet" });
+    if (!response.data.values || response.data.values.length === 0) {
+      console.log("📋 No data found in sheet");
+      return res.json([]);
     }
+    
     // Extract dates from confirmed bookings using NEW format only
     // New format: Date in column G (index 6), Status in columns I and J (indices 8 and 9)
     const confirmedDates = response.data.values
