@@ -8,6 +8,7 @@ const { sendBookingEmail, sendContactEmail, sendPaymentConfirmationEmail } = req
 const { addToGoogleSheet, updateBookingStatus } = require("./services/sheetsService");
 const authRoutes = require('./routes/auth');
 const imageRoutes = require('./routes/images');
+const testimonial = require('./routes/testimonials');
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/testimonials', testimonial);
 
 // Use Cloudinary storage from your lib/cloudinary.js
 const { storage } = require('./lib/cloudinary');

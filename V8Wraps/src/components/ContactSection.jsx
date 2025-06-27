@@ -27,14 +27,14 @@ export default function ContactSection() {
         <h2 className="text-3xl font-bold text-orange-600 mb-8">Contact Us</h2>
         <div className="grid md:grid-cols-2 gap-8 text-left">
           <div>
-            <p className="flex items-center gap-2"><MapPin size={18} /><strong>Location:</strong> San Jose, California</p>
-            <p className="flex items-center gap-2"><Phone size={18} /><strong>Phone:</strong> (+91) 8178714071</p>
+            <p className="flex items-center gap-2"><MapPin size={18} /><strong>Location:</strong>Norman Ave ,Santa clara ,California</p>
+            <p className="flex items-center gap-2"><Phone size={18} /><strong>Phone:</strong> (+1) 4083346968</p>
             <p className="flex items-center gap-2"><Mail size={18} /><strong>Email:</strong> <a href="mailto:info@v8wraps.com" className="text-orange-600 underline">info@v8wraps.com</a></p>
             <p className="flex items-center gap-2"><Instagram size={18} /> <strong>Instagram:</strong> <a href="https://www.instagram.com/v8wraps" className="text-orange-600 underline" target="_blank">@v8wraps</a></p>
-            <p className="flex items-center gap-2"><MessageSquare size={18} /><strong>WhatsApp:</strong> <a href="https://wa.me/918178714071" className="text-green-600 underline" target="_blank">Chat Now</a></p>
+            <p className="flex items-center gap-2"><MessageSquare size={18} /><strong>WhatsApp:</strong> <a href="https://wa.me/14083346968" className="text-green-600 underline" target="_blank">Chat Now</a></p>
             <iframe
               title="Google Maps"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3172.9856375742094!2d-121.88632868469224!3d37.33820797984245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fccb64c17f9bb%3A0xa64bb9c8b6c86c4!2sSan%20Jose%2C%20CA!5e0!3m2!1sen!2sus!4v1617133504432!5m2!1sen!2sus"
+              src="https://www.google.com/maps?q=1190+Norman+Ave+%231206,+Santa+Clara,+CA+95054&output=embed"
               width="100%"
               height="250"
               className="mt-4 rounded-lg"

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import AdminPanel from "./components/AdminUpload";
+import TestimonialAdmin from "./components/TestimonialAdmin";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -184,6 +185,8 @@ export default function AdminPage() {
 
       {/* Admin Panel */}
       <AdminPanel />
+      <TestimonialAdmin />
+
     </div>
   );
 }

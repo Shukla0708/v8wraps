@@ -7,6 +7,7 @@ export default function HeroSection() {
   const [bgImage, setBgImage] = useState("");
   const [images, setImages] = useState([]);
   const scrollToSection = useScrollTo();
+  const backend = import.meta.env.VITE_APP_API_BASE_URL;
 
   useEffect(() => {
     const init = async () => {
@@ -25,11 +26,14 @@ export default function HeroSection() {
 
   const loadHeroData = async () => {
     try {
+      const [imagesResponse] = await Promise.all([
+        fetch(`${backend}api/images`)
+      ]);
 
       const [imagesData] = await Promise.all([
-        imageService.getImages()
-
+        imagesResponse.json()
       ]);
+
       setImages(imagesData);
 
     } catch (err) {
@@ -60,7 +64,7 @@ export default function HeroSection() {
         <p className="text-lg md:text-xl mb-2">
           Custom Wraps | PPF | Tint | Stickers – All in One Place
         </p>
-        <p className="text-sm text-gray-300 mb-6">📍San Jose | Serving the Bay Area</p>
+        <p className="text-sm text-gray-300 mb-6">📍Santa clara ,California | Serving the Bay Area</p>
         <p className="text-md font-medium mb-8">
           {/* Premium Materials. Precision Cuts. Professional Finish. */}
           Founded by auto enthusiasts, V8 Wraps is your go-to car styling partner in San Jose.

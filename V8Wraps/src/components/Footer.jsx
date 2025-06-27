@@ -1,11 +1,13 @@
+import { Phone, Mail, MapPin, Instagram, MessageSquare } from "lucide-react";
+
 export default function Footer() {
   return (
     <footer className="bg-black text-white py-10 px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h3 className="text-xl font-semibold text-orange-500 mb-2">V8 Wraps</h3>
-          <p>📍 San Jose, California</p>
-          <p>📞 (XXX) XXX-XXXX</p>
+          <p>📍 1190 Norman Ave #1206 ,Santa clara ,California,95054</p>
+          <p>📞 4083346968</p>
           <p>📧 info@v8wraps.com</p>
         </div>
         <div className="text-center md:text-right">

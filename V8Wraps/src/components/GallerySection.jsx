@@ -12,7 +12,7 @@ export default function GallerySection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPair, setSelectedPair] = useState(null);
-
+  const backend = import.meta.env.VITE_APP_API_BASE_URL;
   useEffect(() => {
     loadGalleryData();
   }, []);
@@ -20,12 +20,25 @@ export default function GallerySection() {
   const loadGalleryData = async () => {
     try {
       setLoading(true);
-      const [imagesData, categoriesData] = await Promise.all([
-        imageService.getImages(),
-        imageService.getCategories()
+      // const [imagesData, categoriesData] = await Promise.all([
+      //   // imageService.getImages(),
+      //   // imageService.getCategories()
+      //   await fetch(`${backend}api/images`),
+      //   await fetch(`${backend}api/images/categories`)
+      // ]);
+      const [imagesResponse, categoriesResponse] = await Promise.all([
+        fetch(`${backend}api/images`),
+        fetch(`${backend}api/images/categories`)
       ]);
 
+      const [imagesData, categoriesData] = await Promise.all([
+        imagesResponse.json(),
+        categoriesResponse.json()
+      ]);
+
+
       setImages(imagesData);
+      // setCategories(categoriesData);
       setCategories(categoriesData);
     } catch (err) {
       console.error("Error loading gallery:", err);

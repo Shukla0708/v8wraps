@@ -5,19 +5,6 @@ const { supabase } = require('../lib/supabase');
 const {authenticateToken} = require('../lib/middleware');
 const router = express.Router();
 
-// Middleware to verify JWT
-// const authenticateToken = (req, res, next) => {
-//     const authHeader = req.headers['authorization'];
-//     const token = authHeader && authHeader.split(' ')[1]; // Expect: Bearer <token>
-
-//     if (!token) return res.status(401).json({ message: 'Token required' });
-
-//     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-//         if (err) return res.status(403).json({ message: 'Invalid token' });
-//         req.user = user;
-//         next();
-//     });
-// };
 
 // POST /api/auth - Login
 router.post('/', async (req, res) => {
