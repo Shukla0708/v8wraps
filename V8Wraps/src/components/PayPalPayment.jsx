@@ -17,7 +17,6 @@ const PayPalPayment = ({
 
     // PayPal SDK configuration
     const PAYPAL_CLIENT_ID =  import.meta.env.VITE_APP_PAYPAL_CLIENT_ID;
-    console.log(PAYPAL_CLIENT_ID);
 
     useEffect(() => {
         // Load PayPal SDK

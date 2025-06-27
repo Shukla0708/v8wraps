@@ -130,65 +130,6 @@ router.delete('/:id', authenticateToken ,async (req, res) => {
   }
 });
 
-// router.post('/cloudinary', upload.single('file'), async (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ message: 'No file uploaded' });
-//     }
-
-//     const filePath = req.file.path;
-
-//     // Create FormData properly for Node.js
-//     const form = new FormData();
-//     form.append('file', fs.createReadStream(filePath));
-//     form.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
-//     form.append('folder', 'gallery');
-
-//     console.log('Uploading to Cloudinary...');
-
-//     const cloudinaryResponse = await fetch(
-//       `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
-//       {
-//         method: 'POST',
-//         body: form,
-//         headers: form.getHeaders(), // This is crucial for form-data
-//       }
-//     );
-
-//     console.log('Cloudinary response status:', cloudinaryResponse.status);
-
-//     if (!cloudinaryResponse.ok) {
-//       const errorText = await cloudinaryResponse.text();
-//       console.error('Cloudinary error:', errorText);
-//       throw new Error(`Failed to upload image: ${errorText}`);
-//     }
-
-//     const data = await cloudinaryResponse.json();
-//     console.log('Upload successful:', data.public_id);
-
-//     // Clean up uploaded file
-//     fs.unlink(filePath, (err) => {
-//       if (err) console.error('Error deleting temp file:', err);
-//     });
-
-//     res.status(200).json(data);
-//   } catch (error) {
-//     console.error('Error uploading image:', error);
-    
-//     // Clean up uploaded file in case of error
-//     if (req.file && req.file.path) {
-//       fs.unlink(req.file.path, (err) => {
-//         if (err) console.error('Error deleting temp file:', err);
-//       });
-//     }
-    
-//     res.status(500).json({ 
-//       message: 'Failed to upload image',
-//       error: error.message 
-//     });
-//   }
-// });
-
 //delete images from coudinary
 router.post('/delete-cloudinary-image', authenticateToken ,async (req, res) => {
   try {

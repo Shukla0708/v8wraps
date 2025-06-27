@@ -146,7 +146,7 @@ async function sendPaymentConfirmationEmail({ bookingData, paymentData }) {
           <div style="text-align: center; margin: 30px 0;">
             <p>Questions? Contact us:</p>
             <p>📧 ${process.env.EMAIL_USER}<br>
-            📱 Your phone number here</p>
+            📱 4083346968</p>
           </div>
 
           <div style="text-align: center; font-size: 12px; color: #6b7280; margin-top: 30px;">
