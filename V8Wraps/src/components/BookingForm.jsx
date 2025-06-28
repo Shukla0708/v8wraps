@@ -162,7 +162,7 @@ export default function BookingForm() {
                 formData.append(key, value)
             );
             if (photo) formData.append("photo", photo);
-            
+
             // Add status as pending payment
             formData.append("status", "pending_payment");
 
@@ -200,24 +200,24 @@ export default function BookingForm() {
         try {
             // Create booking first
             const bookingData = await createBooking();
-            
+
             // Show payment form
             setShowPayment(true);
         } catch (err) {
             alert("Failed to create booking. Please try again.");
         }
     };
-    
+
     const handleQuote = async () => {
-        
-        
+
+
         if (!form.name) {
             alert("Please enter your name.");
             return;
-        }if (!form.phone) {
+        } if (!form.phone) {
             alert("Please enter your Phone number.");
             return;
-        }if (!form.email) {
+        } if (!form.email) {
             alert("Please enter a valid email address.");
             return;
         }
@@ -227,13 +227,13 @@ export default function BookingForm() {
         }
 
         try {
-            
+
             const quoteData = new FormData();
             Object.entries(form).forEach(([key, value]) =>
                 quoteData.append(key, value)
             );
             if (photo) quoteData.append("photo", photo);
-            
+
             const response = await fetch(`${backend}api/quotation`, {
                 method: "POST",
                 body: quoteData,
@@ -267,7 +267,7 @@ export default function BookingForm() {
 
             if (response.ok) {
                 alert("Booking confirmed and payment successful!");
-                
+
                 // Reset form
                 setForm({
                     name: "",
@@ -334,7 +334,7 @@ export default function BookingForm() {
                     <h2 className="text-3xl font-bold mb-8 text-center text-orange-600">
                         Complete Your Payment
                     </h2>
-                    
+
                     {/* Booking Summary */}
                     <div className="bg-gray-50 rounded-lg p-6 mb-6">
                         <h3 className="text-xl font-semibold mb-4">Booking Summary</h3>
@@ -546,7 +546,7 @@ export default function BookingForm() {
                     <button
                         type="button"
                         // disabled={!dateValidation.isValid && selectedDate}
-                        onClick={()=>handleQuote()}
+                        onClick={() => handleQuote()}
                         className={`w-full font-semibold py-3 rounded-lg transition ${dateValidation.isValid || !selectedDate
                             ? 'bg-orange-600 text-white hover:bg-orange-700'
                             : 'bg-gray-400 text-gray-200 cursor-not-allowed'
