@@ -7,7 +7,6 @@ import BookingForm from "./components/BookingForm";
 import TestimonialsSection from "./components/TestimonialsSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
-import RequireAuth from "./components/RequireAuth";
 import AdminUpload from "./components/AdminUpload";
 import AdminPage from "./admin";
 import './App'
