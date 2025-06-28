@@ -20,12 +20,6 @@ export default function GallerySection() {
   const loadGalleryData = async () => {
     try {
       setLoading(true);
-      // const [imagesData, categoriesData] = await Promise.all([
-      //   // imageService.getImages(),
-      //   // imageService.getCategories()
-      //   await fetch(`${backend}api/images`),
-      //   await fetch(`${backend}api/images/categories`)
-      // ]);
       const [imagesResponse, categoriesResponse] = await Promise.all([
         fetch(`${backend}api/images`),
         fetch(`${backend}api/images/categories`)
@@ -47,10 +41,11 @@ export default function GallerySection() {
       setLoading(false);
     }
   };
+  
 
   const filteredImages = selectedCategory === "All"
-    ? images
-    : images.filter(img => img.category === selectedCategory);
+    ? images.filter(img=>img.description !== 'Hero')
+    : images.filter(img => img.category === selectedCategory && img.description !== 'Hero');
 
   if (loading) {
     return (
@@ -105,7 +100,7 @@ export default function GallerySection() {
             >
               {cat}
               <span className="ml-2 text-sm opacity-75">
-                ({cat === "All" ? new Set(images.map(img => img.title)).size : new Set(images.filter(img => img.category === cat).map(img => img.title)).size})
+                ({cat === "All" ? new Set(images.filter(img => img.description !== 'Hero').map(img => img.title)).size : new Set(images.filter(img => img.category === cat && img.description !== 'Hero').map(img => img.title)).size})
               </span>
             </button>
           ))}
