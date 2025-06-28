@@ -156,13 +156,13 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-md p-4">
+          {/* <div className="mt-6 bg-blue-50 border border-blue-200 rounded-md p-4">
             <h3 className="text-sm font-medium text-blue-800 mb-2">Demo Credentials:</h3>
             <p className="text-sm text-blue-700">
               Email: <code className="bg-blue-100 px-1 rounded">admin@example.com</code><br />
               Password: <code className="bg-blue-100 px-1 rounded">admin123</code>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     );

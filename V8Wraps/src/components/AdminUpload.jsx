@@ -35,7 +35,7 @@ export default function AdminPanel() {
     const [formData, setFormData] = useState({
         title: "",
         category: "Wraps",
-        description: "",
+        description: "Before",
         is_featured: false,
         display_order: 0
     });
@@ -98,9 +98,9 @@ export default function AdminPanel() {
             const imageData = {
                 cloudinary_public_id: cloudinaryData.public_id,
                 cloudinary_url: cloudinaryData.secure_url,
-                title: formData.title || null,
+                title: formData.title ,
                 category: formData.category,
-                description: formData.description || null,
+                description: formData.description ,
                 is_featured: formData.is_featured,
                 display_order: formData.display_order || 0,
             };
@@ -213,213 +213,213 @@ export default function AdminPanel() {
 
     return (
         <section id="upload">
-        <div className="min-h-screen bg-gray-50 py-8 px-4">
-            <div className="max-w-6xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                    Gallery Admin Panel
-                </h1>
+            <div className="min-h-screen bg-gray-50 py-8 px-4">
+                <div className="max-w-6xl mx-auto">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+                        Gallery Admin Panel
+                    </h1>
 
-                {/* Messages */}
-                {error && (
-                    <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex justify-between items-center">
-                        <span className="text-red-600">{error}</span>
-                        <button onClick={clearMessages} className="text-red-400 hover:text-red-600">×</button>
-                    </div>
-                )}
+                    {/* Messages */}
+                    {error && (
+                        <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex justify-between items-center">
+                            <span className="text-red-600">{error}</span>
+                            <button onClick={clearMessages} className="text-red-400 hover:text-red-600">×</button>
+                        </div>
+                    )}
 
-                {success && (
-                    <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex justify-between items-center">
-                        <span className="text-green-600">{success}</span>
-                        <button onClick={clearMessages} className="text-green-400 hover:text-green-600">×</button>
-                    </div>
-                )}
+                    {success && (
+                        <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex justify-between items-center">
+                            <span className="text-green-600">{success}</span>
+                            <button onClick={clearMessages} className="text-green-400 hover:text-green-600">×</button>
+                        </div>
+                    )}
 
-                {/* Upload Form */}
-                <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-                    <h2 className="text-xl font-semibold mb-4">
-                        {editingImage ? 'Edit Image' : 'Upload New Image'}
-                    </h2>
+                    {/* Upload Form */}
+                    <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                        <h2 className="text-xl font-semibold mb-4">
+                            {editingImage ? 'Edit Image' : 'Upload New Image'}
+                        </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Title *
-                            </label>
-                            <input
-                                type="text"
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                                placeholder="Enter image title"
-                            />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Title *
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.title}
+                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                    placeholder="Enter image title"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Category *
+                                </label>
+                                <select
+                                    value={formData.category}
+                                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                >
+                                    {categories.map(cat => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
-                        <div>
+                        <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Category *
+                                Comparison_type *
                             </label>
                             <select
-                                value={formData.category}
-                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                value={formData.description}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                             >
-                                {categories.map(cat => (
+                                {category_type.map(cat => (
                                     <option key={cat} value={cat}>{cat}</option>
                                 ))}
                             </select>
                         </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.is_featured}
+                                    onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
+                                    className="mr-2"
+                                />
+                                <label className="text-sm font-medium text-gray-700">
+                                    Featured Image
+                                </label>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Display Order
+                                </label>
+                                <input
+                                    type="number"
+                                    value={formData.display_order}
+                                    onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+
+                        {!editingImage && (
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Select Image *
+                                </label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    disabled={uploading}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                />
+                                <p className="text-sm text-gray-500 mt-1">
+                                    Supported formats: JPG, PNG, GIF. Max size: 10MB
+                                </p>
+                            </div>
+                        )}
+
+                        {editingImage && (
+                            <div className="flex space-x-4">
+                                <button
+                                    onClick={handleUpdate}
+                                    disabled={loading}
+                                    className="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {loading ? "Updating..." : "Update Image"}
+                                </button>
+                                <button
+                                    onClick={() => setEditingImage(null)}
+                                    className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        )}
+
+                        {uploading && (
+                            <div className="text-center py-4">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto"></div>
+                                <p className="mt-2 text-gray-600">Uploading image...</p>
+                            </div>
+                        )}
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Comparison_type *
-                        </label>
-                        <select
-                            value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                        >
-                            {category_type.map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
-                            ))}
-                        </select>
-                    </div>
+                    {/* Images List */}
+                    <div className="bg-white rounded-lg shadow-md p-6">
+                        <h2 className="text-xl font-semibold mb-4">
+                            Manage Images ({images.length})
+                        </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={formData.is_featured}
-                                onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
-                                className="mr-2"
-                            />
-                            <label className="text-sm font-medium text-gray-700">
-                                Featured Image
-                            </label>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Display Order
-                            </label>
-                            <input
-                                type="number"
-                                value={formData.display_order}
-                                onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                                min="0"
-                            />
-                        </div>
-                    </div>
-
-                    {!editingImage && (
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Select Image *
-                            </label>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                disabled={uploading}
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                            />
-                            <p className="text-sm text-gray-500 mt-1">
-                                Supported formats: JPG, PNG, GIF. Max size: 10MB
-                            </p>
-                        </div>
-                    )}
-
-                    {editingImage && (
-                        <div className="flex space-x-4">
-                            <button
-                                onClick={handleUpdate}
-                                disabled={loading}
-                                className="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {loading ? "Updating..." : "Update Image"}
-                            </button>
-                            <button
-                                onClick={() => setEditingImage(null)}
-                                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    )}
-
-                    {uploading && (
-                        <div className="text-center py-4">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto"></div>
-                            <p className="mt-2 text-gray-600">Uploading image...</p>
-                        </div>
-                    )}
-                </div>
-
-                {/* Images List */}
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-xl font-semibold mb-4">
-                        Manage Images ({images.length})
-                    </h2>
-
-                    {loading && !uploading ? (
-                        <div className="text-center py-8">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto"></div>
-                            <p className="mt-2 text-gray-600">Loading images...</p>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {images.map((image) => (
-                                <div key={image.id} className="border border-gray-200 rounded-lg overflow-hidden">
-                                    <div className="aspect-square overflow-hidden">
-                                        <img
-                                            src={image.cloudinary_url}
-                                            alt={image.title || image.category}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="p-4">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <div>
-                                                <h3 className="font-semibold text-sm">
-                                                    {image.title || 'Untitled'}
-                                                </h3>
-                                                <p className="text-xs text-gray-500">{image.category}</p>
+                        {loading && !uploading ? (
+                            <div className="text-center py-8">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto"></div>
+                                <p className="mt-2 text-gray-600">Loading images...</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {images.map((image) => (
+                                    <div key={image.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                                        <div className="aspect-square overflow-hidden">
+                                            <img
+                                                src={image.cloudinary_url}
+                                                alt={image.title || image.category}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="p-4">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div>
+                                                    <h3 className="font-semibold text-sm">
+                                                        {image.title || 'Untitled'}
+                                                    </h3>
+                                                    <p className="text-xs text-gray-500">{image.category}</p>
+                                                </div>
+                                                {image.is_featured && (
+                                                    <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
+                                                        Featured
+                                                    </span>
+                                                )}
                                             </div>
-                                            {image.is_featured && (
-                                                <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
-                                                    Featured
-                                                </span>
+
+                                            {image.description && (
+                                                <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+                                                    {image.description}
+                                                </p>
                                             )}
-                                        </div>
 
-                                        {image.description && (
-                                            <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                                                {image.description}
-                                            </p>
-                                        )}
-
-                                        <div className="flex space-x-2">
-                                            <button
-                                                onClick={() => handleEdit(image)}
-                                                className="flex-1 px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700"
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(image.id, image.cloudinary_public_id)}
-                                                className="flex-1 px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
-                                            >
-                                                Delete
-                                            </button>
+                                            <div className="flex space-x-2">
+                                                <button
+                                                    onClick={() => handleEdit(image)}
+                                                    className="flex-1 px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(image.id, image.cloudinary_public_id)}
+                                                    className="flex-1 px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
         </section>
     );
 }

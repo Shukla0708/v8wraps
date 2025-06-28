@@ -64,7 +64,7 @@ export default function HeroSection() {
         <p className="text-lg md:text-xl mb-2">
           Custom Wraps | PPF | Tint | Stickers – All in One Place
         </p>
-        <p className="text-sm text-gray-300 mb-6">📍Santa clara ,California | Serving the Bay Area</p>
+        <p className="text-sm text-gray-300 mb-6">📍1206 Norman Ave ,Santa clara ,California 95054 </p> {/* | Serving the Bay Area */}
         <p className="text-md font-medium mb-8">
           {/* Premium Materials. Precision Cuts. Professional Finish. */}
           Founded by auto enthusiasts, V8 Wraps is your go-to car styling partner in San Jose.

@@ -27,14 +27,21 @@ export default function ContactSection() {
         <h2 className="text-3xl font-bold text-orange-600 mb-8">Contact Us</h2>
         <div className="grid md:grid-cols-2 gap-8 text-left">
           <div>
-            <p className="flex items-center gap-2"><MapPin size={18} /><strong>Location:</strong>Norman Ave ,Santa clara ,California</p>
+            <div className="flex items-start gap-2 mb-2">
+              <MapPin size={18} className="mt-0.5 flex-shrink-0" />
+              <div>
+                <strong>Location:</strong>
+                <span className="ml-1">1206 Norman Ave ,Santa Clara ,California 95054</span>
+              </div>
+            </div>
+            {/* <p className="flex flex-wrap items-start gap-2 break-words"><MapPin size={18} /><strong>Location:</strong><span>1206 norman ave santa clara California 95054</span></p> */}
             <p className="flex items-center gap-2"><Phone size={18} /><strong>Phone:</strong> (+1) 4083346968</p>
-            <p className="flex items-center gap-2"><Mail size={18} /><strong>Email:</strong> <a href="mailto:info@v8wraps.com" className="text-orange-600 underline">info@v8wraps.com</a></p>
+            <p className="flex items-center gap-2"><Mail size={18} /><strong>Email:</strong> <a href="mailto:V8wraps@gmail.com" className="text-orange-600 underline">V8wraps@gmail.com</a></p>
             <p className="flex items-center gap-2"><Instagram size={18} /> <strong>Instagram:</strong> <a href="https://www.instagram.com/v8wraps" className="text-orange-600 underline" target="_blank">@v8wraps</a></p>
             <p className="flex items-center gap-2"><MessageSquare size={18} /><strong>WhatsApp:</strong> <a href="https://wa.me/14083346968" className="text-green-600 underline" target="_blank">Chat Now</a></p>
             <iframe
               title="Google Maps"
-              src="https://www.google.com/maps?q=1190+Norman+Ave+%231206,+Santa+Clara,+CA+95054&output=embed"
+              src="https://www.google.com/maps?q=1206+Norman+Ave,+Santa+Clara,+CA+95054&output=embed"
               width="100%"
               height="250"
               className="mt-4 rounded-lg"

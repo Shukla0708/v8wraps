@@ -6,12 +6,12 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h3 className="text-xl font-semibold text-orange-500 mb-2">V8 Wraps</h3>
-          <p>📍 1190 Norman Ave #1206 ,Santa clara ,California,95054</p>
-          <p>📞 4083346968</p>
-          <p>📧 info@v8wraps.com</p>
+          <p className="flex items-center gap-2" ><MapPin size={18} className="mt-0.5 flex-shrink-0" />1206 Norman Ave ,Santa clara ,California</p>
+          <p className="flex items-center gap-2" ><Phone size={18} />4083346968</p>
+          <p className="flex items-center gap-2" ><Mail size={18} />V8wraps@gmail.com</p>
         </div>
         <div className="text-center md:text-right">
-          <p>Follow us on Instagram</p>
+          <p className="flex items-center gap-2" >Follow us on Instagram<Instagram size={18} /></p>
           <a
             href="https://www.instagram.com/v8wraps"
             target="_blank"
