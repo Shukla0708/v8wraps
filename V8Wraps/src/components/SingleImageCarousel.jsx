@@ -36,7 +36,6 @@ export default function SingleImageCarousel({ images = [] }) {
             alt={`Slide ${index + 1}`}
             className="w-full h-auto object-cover rounded-xl"
             onError={(e) => console.error('Image failed to load:', url)}
-            // onLoad={() => console.log('Image loaded successfully:', url)}
           />
         </SwiperSlide>
       ))}

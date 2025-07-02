@@ -98,7 +98,7 @@ const PayPalPayment = ({
                 }
             },
             onCancel: (data) => {
-                console.log("Payment cancelled:", data);
+                console.warn("Payment cancelled:", data);
                 if (onCancel) {
                     onCancel(data);
                 }

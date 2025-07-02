@@ -1,74 +1,3 @@
-// const services = [
-//   {
-//     title: "Vehicle Wraps",
-//     points: [
-//       "Full car wraps (Matte, Gloss, Satin, Chrome)",
-//       "Roof, hood, and accent wraps",
-//       "Custom designs",
-//       "Scratch-resistant and durable materials",
-//     ],
-//   },
-//   {
-//     title: "Paint Protection Film (PPF)",
-//     points: [
-//       "Front bumper, hood, or full-body options",
-//       "Self-healing protection against rock chips",
-//       "Invisible, high-gloss finish",
-//       "Long-lasting protection",
-//     ],
-//   },
-//   {
-//     title: "Ceramic Window Tint",
-//     points: [
-//       "Heat and UV rejection",
-//       "Legal California shades",
-//       "Lifetime warranty on premium films",
-//       "Zero bubbles or peeling",
-//     ],
-//   },
-//   {
-//     title: "Headlight & Taillight Tint",
-//     points: [
-//       "Smoked, blackout, and color options",
-//       "Clean, sleek finish",
-//       "Installed with precision",
-//     ],
-//   },
-//   {
-//     title: "Custom Stickers & Logos",
-//     points: [
-//       "Business branding for vehicles",
-//       "Racing stripes and decals",
-//       "Workhorse 2 plotter precision cuts",
-//       "Easy installation & strong adhesive",
-//     ],
-//   },
-// ];
-
-// export default function ServicesSection() {
-//   return (
-//     <section id="services" className="bg-white text-black py-20 px-6">
-//       <div className="max-w-6xl mx-auto">
-//         <h2 className="text-3xl font-bold text-center mb-12 text-orange-600">Our Services</h2>
-//         <div className="grid md:grid-cols-2 gap-8">
-//           {services.map((service, index) => (
-//             <div
-//               key={index}
-//               className="bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
-//             >
-//               <h3 className="text-xl font-semibold mb-4 text-orange-500">{service.title}</h3>
-//               <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-//                 {service.points.map((point, i) => (
-//                   <li key={i}>{point}</li>
-//                 ))}
-//               </ul>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Shield, Palette } from 'lucide-react';
 
@@ -342,11 +271,11 @@ export default function ServicesSection() {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
             <div className="text-3xl font-bold text-orange-600 mb-2">500+</div>
             <div className="text-gray-600 font-medium">Vehicles Transformed</div>
-          </div>
+          </div> */}
           <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
             <div className="text-3xl font-bold text-orange-600 mb-2">5 Years</div>
             <div className="text-gray-600 font-medium">Warranty Coverage</div>
