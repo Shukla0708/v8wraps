@@ -64,5 +64,62 @@ router.get('/user', authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+// PUT /api/auth/change-password - Change password
+router.put('/change-password', authenticateToken, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+    
+    // Validation
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ message: 'Current password and new password are required' });
+    }
+    
+    if (newPassword.length < 6) {
+        return res.status(400).json({ message: 'New password must be at least 6 characters long' });
+    }
+    
+    try {
+        // Get current user with password hash
+        const { data: user, error: fetchError } = await supabase
+            .from('admin_users')
+            .select('*')
+            .eq('id', req.user.id)
+            .single();
+            
+        if (fetchError || !user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        // Verify current password
+        const passwordMatch = await bcrypt.compare(currentPassword, user.password_hash);
+        if (!passwordMatch) {
+            return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+        
+        // Hash new password
+        const saltRounds = 10;
+        const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
+        
+        // Update password in database
+        console.log(req.user.id);
+        const { error: updateError } = await supabase
+            .from('admin_users')
+            .update({ 
+                password_hash: newPasswordHash,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', req.user.id);
+            
+        if (updateError) {
+            console.error('Password update error:', updateError);
+            return res.status(500).json({ message: 'Failed to update password' });
+        }
+        
+        res.status(200).json({ message: 'Password changed successfully' });
+        
+    } catch (error) {
+        console.error('Change password error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 module.exports = router;
