@@ -19,7 +19,9 @@ export default function HeroSection() {
   useEffect(() => {
     if (images.length > 0) {
       const afterImages = images.filter(img => img.description === "Hero");
+      if (afterImages.length <= 0) return; 
       const random = Math.floor(Math.random() * afterImages.length);
+      
       setBgImage(afterImages[random].cloudinary_url);
     }
   }, [images]);
