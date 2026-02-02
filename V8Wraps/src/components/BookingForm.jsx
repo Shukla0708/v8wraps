@@ -429,17 +429,17 @@ export default function BookingForm() {
                             required
                         >
                             <option value="">Select a Service</option>
-                            <option value="Vehicle Wrap">Vehicle Wrap - $2,50</option>
-                            <option value="Paint Protection Film (PPF)">Paint Protection Film (PPF) - $1,80</option>
-                            <option value="Ceramic Tint">Ceramic Tint - $80</option>
-                            <option value="Headlight/Taillight Tint">Headlight/Taillight Tint - $30</option>
-                            <option value="Custom Stickers & Logos">Custom Stickers & Logos - $15</option>
+                            <option value="Vehicle Wrap">Vehicle Wrap</option>
+                            <option value="Paint Protection Film (PPF)">Paint Protection Film (PPF)</option>
+                            <option value="Ceramic Tint">Ceramic Tint</option>
+                            <option value="Headlight/Taillight Tint">Headlight/Taillight Tint</option>
+                            <option value="Custom Stickers & Logos">Custom Stickers & Logos</option>
                         </select>
-                        {form.service && (
+                        /* {form.service && (
                             <p className="mt-1 text-sm text-green-600 font-medium">
                                 Price: ${getServicePrice()}
                             </p>
-                        )}
+                        )} */
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">
