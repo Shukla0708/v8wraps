@@ -435,11 +435,7 @@ export default function BookingForm() {
                             <option value="Headlight/Taillight Tint">Headlight/Taillight Tint</option>
                             <option value="Custom Stickers & Logos">Custom Stickers & Logos</option>
                         </select>
-                        // {form.service && (
-                            // <p className="mt-1 text-sm text-green-600 font-medium">
-                                // Price: ${getServicePrice()}
-                            // </p>
-                        // )} 
+                         
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">
